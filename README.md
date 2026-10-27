@@ -8,7 +8,7 @@
 <title>Кіберщит — безпека в Інтернеті</title>
  <link rel="icon" href="goose.png">
        <a class="button"
-           href="https://ТВІЙ-НІК.github.io/kibershchyt/"
+           href="https://Dmytro-zp.github.io/kibershchyt/"
            target="_blank">
             Перейти на сайт
         </a>
