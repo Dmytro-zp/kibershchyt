@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Кіберщит — навчальний сайт про безпеку в Інтернеті.">
+<title>Кіберщит — безпека в Інтернеті</title>
+ <link rel="icon" href="goose.png">
+</head>
+
+<style>
+:root {
+  --bg: #f3f7ff;
+  --card: #ffffff;
+  --text: #172b4d;
+  --muted: #586b85;
+  --blue: #1769e0;
+  --dark: #10284c;
+  --border: #dce6f5;
+  --green: #138354;
+  --red: #c13749;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+}
+
+header {
+  background: var(--dark);
+  color: white;
+  padding: 16px 6%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 25px;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+nav a:hover { color: #8fc9ff; }
+
+.hero {
+  background: linear-gradient(135deg, #10284c, #1769e0);
+  color: white;
+  padding: 85px 7%;
+  text-align: center;
+}
+
+.hero h2 {
+  font-size: clamp(32px, 6vw, 52px);
+  margin: 0 0 15px;
+  line-height: 1.2;
+}
+
+.hero p {
+  font-size: 19px;
+  max-width: 650px;
+  margin: 0 auto 28px;
+}
+
+.button {
+  display: inline-block;
+  background: #ffc247;
+  color: #172b4d;
+  text-decoration: none;
+  border: 0;
+  border-radius: 10px;
+  padding: 13px 21px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.button:hover { filter: brightness(.96); }
+
+main {
+  max-width: 1100px;
+  width: 92%;
+  margin: auto;
+}
+
+section.content-section {
+  padding: 55px 0;
+  scroll-margin-top: 90px;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.section-title h2 {
+  font-size: 30px;
+  margin-bottom: 8px;
+}
+
+.section-title p { color: var(--muted); }
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 17px;
+  padding: 23px;
+  box-shadow: 0 6px 22px #173b6810;
+}
+
+.card h3 { margin-top: 5px; }
+
+.card p, .card li { color: var(--muted); }
+
+.icon { font-size: 35px; }
+
+.tip-list {
+  list-style: none;
+  padding: 0;
+}
+
+.tip-list li {
+  padding: 10px 0 10px 30px;
+  position: relative;
+  border-bottom: 1px solid var(--border);
+}
+
+.tip-list li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--green);
+  font-weight: bold;
+}
+
+.notice {
+  background: #e5f0ff;
+  border-left: 5px solid var(--blue);
+  border-radius: 8px;
+  padding: 18px;
+  margin-top: 22px;
+}
+
+.quiz-area {
+  max-width: 760px;
+  margin: auto;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: clamp(20px, 4vw, 35px);
+  box-shadow: 0 10px 30px #173b6810;
+}
+
+.quiz-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.progress {
+  height: 8px;
+  background: #e5ebf5;
+  border-radius: 20px;
+  margin: 15px 0 25px;
+  overflow: hidden;
+}
+
+#progressBar {
+  height: 100%;
+  width: 0;
+  background: var(--blue);
+  transition: width .25s;
+}
+
+#question {
+  font-size: 21px;
+  font-weight: bold;
+  line-height: 1.45;
+}
+
+.answer {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 13px;
+  margin: 10px 0;
+  cursor: pointer;
+}
+
+.answer:hover { border-color: var(--blue); }
+
+.answer input {
+  margin-top: 5px;
+  accent-color: var(--blue);
+}
+
+.answer.correct {
+  border-color: var(--green);
+  background: #e8f8ef;
+}
+
+.answer.incorrect {
+  border-color: var(--red);
+  background: #fff0f1;
+}
+
+#feedback {
+  border-radius: 10px;
+  padding: 15px;
+  margin-top: 17px;
+}
+
+#feedback.good {
+  background: #e8f8ef;
+  color: #116540;
+}
+
+#feedback.bad {
+  background: #fff0f1;
+  color: #a32638;
+}
+
+.quiz-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.quiz-buttons button {
+  flex: 1;
+  min-width: 160px;
+}
+
+.secondary {
+  background: #e5efff;
+  color: var(--dark);
+}
+
+button:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+#result {
+  text-align: center;
+  padding: 25px 0 5px;
+}
+
+#result h3 { font-size: 27px; }
+
+.score {
+  font-size: 35px;
+  color: var(--blue);
+  font-weight: bold;
+}
+
+.sources a {
+  color: var(--blue);
+  overflow-wrap: anywhere;
+}
+
+footer {
+  background: var(--dark);
+  color: white;
+  text-align: center;
+  padding: 28px 15px;
+  margin-top: 40px;
+}
+
+footer p { margin: 5px; }
+
+[hidden] { display: none !important; }
+
+button:focus-visible, a:focus-visible, input:focus-visible {
+  outline: 3px solid #f2a900;
+  outline-offset: 3px;
+}
+
+@media (max-width: 760px) {
+  header {
+    position: static;
+    justify-content: center;
+    text-align: center;
+  }
+
+  nav { justify-content: center; }
+
+  .cards { grid-template-columns: 1fr; }
+
+  .hero { padding: 60px 5%; }
+
+  .hero p { font-size: 17px; }
+
+  section.content-section { padding: 38px 0; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>🛡️ Кіберщит</h1>
+  <nav aria-label="Головна навігація">
+    <a href="#home">Головна</a>
+    <a href="#passwords">Паролі</a>
+    <a href="#phishing">Фішинг</a>
+    <a href="#privacy">Приватність</a>
+    <a href="#quiz">Тест</a>
+    <a href="#about">Джерела</a>
+  </nav>
+</header>
+
+<section class="hero" id="home">
+  <h2>Безпека в Інтернеті</h2>
+  <p>
+    Захищай свої дані, розпізнавай цифрові загрози
+    та впевнено користуйся сучасними технологіями.
+  </p>
+  <a class="button" href="#quiz">Перевір свої знання →</a>
+</section>
+
+<main>
+
+<section class="content-section">
+  <div class="section-title">
+    <h2>Твій цифровий захист</h2>
+    <p>Чотири важливі складові безпечної поведінки в Інтернеті.</p>
+  </div>
+
+  <div class="cards">
+    <article class="card">
+      <div class="icon">🔐</div>
+      <h3>Надійні паролі</h3>
+      <p>Захищай облікові записи довгими й унікальними паролями.</p>
+      <a href="#passwords">Дізнатися більше →</a>
+    </article>
+
+    <article class="card">
+      <div class="icon">✉️</div>
+      <h3>Захист від фішингу</h3>
+      <p>Навчися помічати підозрілі повідомлення та посилання.</p>
+      <a href="#phishing">Дізнатися більше →</a>
+    </article>
+
+    <article class="card">
+      <div class="icon">🕵️</div>
+      <h3>Приватність</h3>
+      <p>Контролюй, яку інформацію про себе ти поширюєш.</p>
+      <a href="#privacy">Дізнатися більше →</a>
+    </article>
+  </div>
+</section>
+
+<section class="content-section" id="passwords">
+  <div class="section-title">
+    <h2>🔐 Надійні паролі</h2>
+    <p>Поради для захисту облікових записів.</p>
+  </div>
+
+  <div class="card">
+    <ul class="tip-list">
+      <li>Використовуй довгі й унікальні паролі для різних сервісів.</li>
+      <li>Не використовуй ім’я, дату народження чи прості послідовності.</li>
+      <li>Не повідомляй пароль іншим людям і не надсилай його в чатах.</li>
+      <li>За можливості користуйся перевіреним менеджером паролів.</li>
+      <li>Увімкни багатофакторну автентифікацію (MFA).</li>
+      <li>Якщо пароль міг стати відомим іншій людині, зміни його через офіційний сайт.</li>
+    </ul>
+    <div class="notice">
+      <strong>Пам’ятай:</strong> ніколи не вводь свій справжній пароль у навчальний тест.
+    </div>
+  </div>
+</section>
+
+<section class="content-section" id="phishing">
+  <div class="section-title">
+    <h2>✉️ Як розпізнати фішинг</h2>
+    <p>Фішинг — це спроба обманом отримати твої дані.</p>
+  </div>
+
+  <div class="cards">
+    <article class="card">
+      <h3>⚠️ Ознаки небезпеки</h3>
+      <ul>
+        <li>Повідомлення вимагає негайно діяти.</li>
+        <li>Обіцяє неочікуваний приз.</li>
+        <li>Адреса відправника виглядає підозріло.</li>
+        <li>Просять пароль або код підтвердження.</li>
+      </ul>
+    </article>
+
+    <article class="card">
+      <h3>📩 Приклад фішингу</h3>
+      <p>
+        «Ваш акаунт буде заблоковано за 10 хвилин!
+        Перейдіть за посиланням і введіть пароль».
+      </p>
+      <p><strong>Це навчальний приклад підозрілого повідомлення.</strong></p>
+    </article>
+
+    <article class="card">
+      <h3>✅ Як діяти</h3>
+      <ul>
+        <li>Не переходь за підозрілим посиланням.</li>
+        <li>Не відкривай невідомі вкладення.</li>
+        <li>Перевір повідомлення через офіційний сайт.</li>
+        <li>Зв’яжися з відправником іншим каналом.</li>
+      </ul>
+    </article>
+  </div>
+</section>
+
+<section class="content-section" id="privacy">
+  <div class="section-title">
+    <h2>🔒 Приватність і персональні дані</h2>
+    <p>Твоя інформація заслуговує на захист.</p>
+  </div>
+
+  <div class="cards">
+    <article class="card">
+      <h3>Що не варто публікувати</h3>
+      <ul>
+        <li>Паролі та коди входу.</li>
+        <li>Домашню адресу й номер телефону.</li>
+        <li>Фото документів і банківських карток.</li>
+        <li>Чужі приватні фото без дозволу.</li>
+      </ul>
+    </article>
+
+    <article class="card">
+      <h3>Перевір налаштування</h3>
+      <ul>
+        <li>Хто може бачити твої дописи?</li>
+        <li>Чи потрібна застосунку геолокація?</li>
+        <li>Чи встановлені оновлення?</li>
+        <li>Чи заблокований екран пристрою?</li>
+      </ul>
+    </article>
+
+    <article class="card">
+      <h3>Якщо виникла проблема</h3>
+      <p>
+        Збережи докази підозрілих повідомлень,
+        не виконуй вимог шахраїв і звернися до дорослого,
+        якому довіряєш, або до відповідної служби підтримки.
+      </p>
+    </article>
+  </div>
+</section>
+
+<section class="content-section" id="quiz">
+  <div class="section-title">
+    <h2>🧠 Тест із кібербезпеки</h2>
+    <p>Відповідай на 8 запитань і перевір свої знання.</p>
+  </div>
+
+  <div class="quiz-area" id="quizArea">
+    <div class="quiz-meta">
+      <span id="questionCount">Запитання 1 із 8</span>
+      <span id="scoreLive">Бали: 0</span>
+    </div>
+
+    <div class="progress">
+      <div id="progressBar"></div>
+    </div>
+
+    <h3 id="question"></h3>
+    <div id="answers"></div>
+
+    <div id="feedback" role="status" aria-live="polite" hidden></div>
+
+    <div class="quiz-buttons">
+      <button class="button" id="checkButton" disabled>
+        Перевірити відповідь
+      </button>
+      <button class="button secondary" id="nextButton" hidden>
+        Наступне запитання →
+      </button>
+    </div>
+  </div>
+
+  <div class="quiz-area" id="result" hidden>
+    <h3>🏆 Тест завершено!</h3>
+    <p class="score" id="finalScore"></p>
+    <p id="resultMessage"></p>
+    <button class="button" id="restartButton">Пройти тест ще раз</button>
+  </div>
+</section>
+
+<section class="content-section" id="about">
+  <div class="section-title">
+    <h2>📚 Про проєкт</h2>
+    <p>Навчальний вебресурс для учнів середньої та старшої школи.</p>
+  </div>
+
+  <div class="card">
+    <h3>Мета сайту</h3>
+    <p>
+      Навчити користувачів розпізнавати цифрові загрози,
+      захищати персональні дані та відповідально поводитися
+      в Інтернеті.
+    </p>
+
+    <h3>Використані технології</h3>
+    <p>
+      HTML створює структуру сторінки, CSS відповідає за дизайн,
+      а JavaScript забезпечує роботу інтерактивного тесту.
+    </p>
+
+    <h3>Корисні джерела</h3>
+    <ul class="sources">
+      <li><a href="https://cert.gov.ua/" target="_blank" rel="noopener noreferrer">CERT-UA — реагування на кіберінциденти</a></li>
+      <li><a href="https://cyberpolice.gov.ua/" target="_blank" rel="noopener noreferrer">Кіберполіція України</a></li>
+      <li><a href="https://www.ncsc.gov.uk/collection/top-tips-for-staying-secure-online" target="_blank" rel="noopener noreferrer">NCSC — поради з безпеки онлайн</a></li>
+	  <li><a href="https://chatgpt.com/uk-UA/" target="_blank" rel="noopener noreferrer">Ідея проєкту була взята з ШІ</a></li>
+    </ul>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p><strong>🛡️ Кіберщит</strong></p>
+  <p>Думай. Перевіряй. Захищай.</p>
+  <p>Навчальний проєкт із кібербезпеки</p>
+</footer>
+
+<script>
+const questions = [
+  {
+    q: "Ти отримав(-ла) повідомлення: «Акаунт заблокують за 10 хвилин. Перейди за посиланням і введи пароль». Що робити?",
+    a: [
+      "Негайно перейти за посиланням",
+      "Перевірити повідомлення через офіційний сайт або підтримку",
+      "Переслати повідомлення друзям",
+      "Ввести пароль, щоб уникнути блокування"
+    ],
+    correct: 1,
+    explanation: "Терміновість і вимога ввести пароль — ознаки можливого фішингу. Перевір повідомлення через офіційний канал."
+  },
+  {
+    q: "Чому не варто використовувати один пароль для всіх сайтів?",
+    a: [
+      "Браузер працюватиме повільніше",
+      "Усі сайти стануть платними",
+      "Витік одного пароля може поставити під загрозу інші акаунти",
+      "Пароль перестане працювати через день"
+    ],
+    correct: 2,
+    explanation: "Унікальні паролі зменшують ризик: викрадений пароль від одного сервісу не повинен відкривати інші акаунти."
+  },
+  {
+    q: "Яку інформацію не слід публікувати у відкритому дописі?",
+    a: [
+      "Улюблену музику",
+      "Відгук про книжку",
+      "Малюнок власного авторства",
+      "Домашню адресу, паролі або фото документів"
+    ],
+    correct: 3,
+    explanation: "Паролі, адреса та документи є чутливими даними, які можуть використати для шахрайства."
+  },
+  {
+    q: "Що допомагає додатково захистити обліковий запис?",
+    a: [
+      "Унікальний пароль і багатофакторна автентифікація",
+      "Однаковий пароль на всіх сайтах",
+      "Вимкнення оновлень",
+      "Передавання коду входу другу"
+    ],
+    correct: 0,
+    explanation: "Багатофакторна автентифікація додає ще один рівень захисту, а унікальний пароль знижує ризик повторного використання."
+  },
+  {
+    q: "Друг надсилає дивне посилання й просить терміново ввійти в акаунт. Що робити?",
+    a: [
+      "Одразу відкрити посилання",
+      "Ввести пароль, якщо є логотип",
+      "Перевірити повідомлення іншим каналом, наприклад зателефонувати другу",
+      "Переслати посилання всім знайомим"
+    ],
+    correct: 2,
+    explanation: "Акаунт знайомої людини могли зламати. Перевір повідомлення іншим каналом перед переходом за посиланням."
+  },
+  {
+    q: "Застосунок просить доступ до геолокації, хоча вона не потрібна для його роботи. Що робити?",
+    a: [
+      "Дозволити всі запити",
+      "Відмовити або обмежити дозвіл у налаштуваннях",
+      "Дозволити доступ назавжди",
+      "Опублікувати своє місцезнаходження"
+    ],
+    correct: 1,
+    explanation: "Надавай застосункам лише ті дозволи, які справді потрібні для їхньої роботи."
+  },
+  {
+    q: "Ти підозрюєш, що хтось дізнався твій пароль. Яка дія найкраща?",
+    a: [
+      "Нічого не робити",
+      "Надіслати пароль другу",
+      "Змінити пароль через офіційний сайт і перевірити захист акаунта",
+      "Використати цей пароль на інших сайтах"
+    ],
+    correct: 2,
+    explanation: "Зміни пароль через офіційний сайт або застосунок, перевір активні сеанси та ввімкни додатковий захист."
+  },
+  {
+    q: "Ти отримав(-ла) вкладення від невідомого відправника. Що робити?",
+    a: [
+      "Відкрити файл негайно",
+      "Завантажити його на шкільний комп'ютер",
+      "Переслати файл друзям",
+      "Не відкривати вкладення та перевірити відправника"
+    ],
+    correct: 3,
+    explanation: "Невідомі вкладення можуть бути небезпечними. Спершу перевір джерело повідомлення."
+  }
+];
+
+let current = 0;
+let score = 0;
+let selected = null;
+let answered = false;
+
+const questionElement = document.getElementById("question");
+const answersElement = document.getElementById("answers");
+const feedbackElement = document.getElementById("feedback");
+const checkButton = document.getElementById("checkButton");
+const nextButton = document.getElementById("nextButton");
+const quizArea = document.getElementById("quizArea");
+const resultArea = document.getElementById("result");
+
+function showQuestion() {
+  const q = questions[current];
+  selected = null;
+  answered = false;
+
+  document.getElementById("questionCount").textContent =
+    `Запитання ${current + 1} із ${questions.length}`;
+
+  document.getElementById("scoreLive").textContent = `Бали: ${score}`;
+  document.getElementById("progressBar").style.width =
+    `${current / questions.length * 100}%`;
+
+  questionElement.textContent = q.q;
+  answersElement.replaceChildren();
+
+  feedbackElement.hidden = true;
+  feedbackElement.className = "";
+  feedbackElement.textContent = "";
+
+  checkButton.hidden = false;
+  checkButton.disabled = true;
+  nextButton.hidden = true;
+
+  q.a.forEach((answer, index) => {
+    const label = document.createElement("label");
+    label.className = "answer";
+
+    const radio = document.createElement("input");
+    radio.type = "radio";
+    radio.name = "quizAnswer";
+    radio.value = index;
+
+    radio.addEventListener("change", () => {
+      selected = index;
+      checkButton.disabled = false;
+    });
+
+    const text = document.createElement("span");
+    text.textContent = answer;
+
+    label.append(radio, text);
+    answersElement.append(label);
+  });
+}
+
+checkButton.addEventListener("click", () => {
+  if (selected === null || answered) return;
+
+  answered = true;
+  const q = questions[current];
+  const labels = answersElement.querySelectorAll(".answer");
+
+  labels.forEach((label, index) => {
+    const radio = label.querySelector("input");
+    radio.disabled = true;
+
+    if (index === q.correct) {
+      label.classList.add("correct");
+    }
+
+    if (index === selected && index !== q.correct) {
+      label.classList.add("incorrect");
+    }
+  });
+
+  const correct = selected === q.correct;
+
+  if (correct) score++;
+
+  feedbackElement.hidden = false;
+  feedbackElement.className = correct ? "good" : "bad";
+  feedbackElement.textContent =
+    (correct ? "Правильно! " : "Не зовсім. ") + q.explanation;
+
+  document.getElementById("scoreLive").textContent = `Бали: ${score}`;
+  document.getElementById("progressBar").style.width =
+    `${(current + 1) / questions.length * 100}%`;
+
+  checkButton.hidden = true;
+  nextButton.hidden = false;
+
+  nextButton.textContent =
+    current === questions.length - 1
+      ? "Побачити результат →"
+      : "Наступне запитання →";
+});
+
+nextButton.addEventListener("click", () => {
+  if (current < questions.length - 1) {
+    current++;
+    showQuestion();
+  } else {
+    showResult();
+  }
+});
+
+function showResult() {
+  quizArea.hidden = true;
+  resultArea.hidden = false;
+
+  document.getElementById("finalScore").textContent =
+    `${score} із ${questions.length} балів`;
+
+  let message;
+
+  if (score === 8) {
+    message = "Чудово! Ти правильно відповів(-ла) на всі запитання. Продовжуй дотримуватися правил кібербезпеки.";
+  } else if (score >= 5) {
+    message = "Гарний результат! Переглянь поради на сайті, щоб закріпити свої знання.";
+  } else {
+    message = "Це початок навчання! Перечитай поради про паролі, фішинг і приватність та спробуй ще раз.";
+  }
+
+  document.getElementById("resultMessage").textContent = message;
+}
+
+document.getElementById("restartButton").addEventListener("click", () => {
+  current = 0;
+  score = 0;
+  quizArea.hidden = false;
+  resultArea.hidden = true;
+  showQuestion();
+});
+
+showQuestion();
+</script>
+
+</body>
+</html>
