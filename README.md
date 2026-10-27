@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="uk">
 <head>
@@ -6,12 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Кіберщит — навчальний сайт про безпеку в Інтернеті.">
 <title>Кіберщит — безпека в Інтернеті</title>
- <link rel="icon" href="goose.png">
-       <a class="button"
-           href="https://Dmytro-zp.github.io/kibershchyt/"
-           target="_blank">
-            Перейти на сайт
-        </a>
 </head>
 
 <style>
